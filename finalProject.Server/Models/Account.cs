@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace GoodEats.Models
+namespace finalProject.Models
 {
     public class Account : Profile
     {

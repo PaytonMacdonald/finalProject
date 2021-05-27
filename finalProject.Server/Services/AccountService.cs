@@ -1,7 +1,7 @@
-using GoodEats.Models;
-using GoodEats.Repositories;
+using finalProject.Models;
+using finalProject.Repositories;
 
-namespace GoodEats.Services
+namespace finalProject.Services
 {
     public class AccountService
     {

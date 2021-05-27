@@ -1,4 +1,4 @@
-namespace GoodEats.Models
+namespace finalProject.Models
 {
     public class Profile
     {

@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-// using finalProject.Repositories;
-// using finalProject.Services;
+using finalProject.Repositories;
+using finalProject.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -42,11 +42,11 @@ namespace finalProject.Server
 
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
 
-            // services
-            // services.AddScoped<AccountService>();
+            // NOTE services
+            services.AddScoped<AccountService>();
             // services.AddTransient<ValuesService>();
-            // repositories
-            // services.AddScoped<AccountsRepository>();
+            // NOTE repositories
+            services.AddScoped<AccountsRepository>();
             // services.AddTransient<ValuesRepository>();
 
 
@@ -77,7 +77,6 @@ namespace finalProject.Server
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
-                // NOTE this must match the object structure in appsettings.json
                 options.Authority = $"https://{Configuration["Auth0:Domain"]}/";
                 options.Audience = Configuration["Auth0:Audience"];
             });
@@ -86,12 +85,10 @@ namespace finalProject.Server
 
         private IDbConnection CreateDbConnection()
         {
-            // NOTE this must match the object structure in appsettings.json
             string connectionString = Configuration["DB:Connectionstring"];
             return new MySqlConnection(connectionString);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -104,8 +101,8 @@ namespace finalProject.Server
 
             app.UseHttpsRedirection();
 
-            // NOTE use to serve your built client
             app.UseDefaultFiles();
+
             app.UseStaticFiles();
 
             app.UseRouting();

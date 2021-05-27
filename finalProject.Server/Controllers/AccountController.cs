@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using GoodEats.Models;
-using GoodEats.Services;
+using finalProject.Models;
+using finalProject.Services;
 using CodeWorks.Auth0Provider;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace GoodEats.Controllers
+namespace finalProject.Controllers
 {
     [ApiController]
     [Route("[controller]")]
