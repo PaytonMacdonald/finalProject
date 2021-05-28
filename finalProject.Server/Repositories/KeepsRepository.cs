@@ -14,7 +14,5 @@ namespace finalProject.Services
         {
             _db = db;
         }
-
-
     }
 }
