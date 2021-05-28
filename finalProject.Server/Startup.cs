@@ -41,11 +41,11 @@ namespace finalProject.Server
             services.AddScoped<IDbConnection>(x => CreateDbConnection());
 
             // NOTE services
-            services.AddScoped<AccountService>();
+            services.AddTransient<AccountService>();
             // services.AddTransient<ValuesService>();
 
             // NOTE repositories
-            services.AddScoped<AccountsRepository>();
+            services.AddTransient<AccountsRepository>();
             // services.AddTransient<ValuesRepository>();
 
 
