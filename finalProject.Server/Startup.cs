@@ -27,8 +27,6 @@ namespace finalProject.Server
         }
 
         public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             ConfigureCors(services);
@@ -45,6 +43,7 @@ namespace finalProject.Server
             // NOTE services
             services.AddScoped<AccountService>();
             // services.AddTransient<ValuesService>();
+
             // NOTE repositories
             services.AddScoped<AccountsRepository>();
             // services.AddTransient<ValuesRepository>();
@@ -85,7 +84,7 @@ namespace finalProject.Server
 
         private IDbConnection CreateDbConnection()
         {
-            string connectionString = Configuration["DB:Connectionstring"];
+            string connectionString = Configuration["db:gearhost"];
             return new MySqlConnection(connectionString);
         }
 
