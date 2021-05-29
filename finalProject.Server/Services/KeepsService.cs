@@ -13,7 +13,22 @@ namespace finalProject.Services
         {
             _repo = repo;
         }
-
-
+        internal IEnumerable<Keep> GetAll()
+        {
+            return _repo.GetAll();
+        }
+        internal Keep GetById(int id)
+        {
+            Keep keep = _repo.GetById(id);
+            if (keep == null)
+            {
+                throw new Exception("Invalid Keep Id");
+            }
+            return keep;
+        }
+        internal Keep Create(Keep newKeep)
+        {
+            return _repo.Create(newKeep);
+        }
     }
 }

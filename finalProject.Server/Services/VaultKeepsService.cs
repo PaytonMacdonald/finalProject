@@ -5,11 +5,11 @@ using finalProject.Repositories;
 
 namespace finalProject.Services
 {
-    public class VaultsKeepsService
+    public class VaultKeepsService
     {
-        private readonly VaultsKeepsRepository _repo;
+        private readonly VaultKeepsRepository _repo;
 
-        public VaultsKeepsService(VaultsKeepsRepository repo)
+        public VaultKeepsService(VaultKeepsRepository repo)
         {
             _repo = repo;
         }

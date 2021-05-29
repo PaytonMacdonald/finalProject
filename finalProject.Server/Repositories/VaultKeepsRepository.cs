@@ -7,10 +7,10 @@ using Dapper;
 
 namespace finalProject.Repositories
 {
-    public class VaultsKeepsRepository
+    public class VaultKeepsRepository
     {
         private readonly IDbConnection _db;
-        public VaultsKeepsRepository(IDbConnection db)
+        public VaultKeepsRepository(IDbConnection db)
         {
             _db = db;
         }

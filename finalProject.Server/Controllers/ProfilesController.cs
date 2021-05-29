@@ -11,7 +11,7 @@ namespace finalProject.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class ProfilesController
+    public class ProfilesController : ControllerBase
     {
         private readonly ProfilesService _service;
         private readonly AccountService _acctService;

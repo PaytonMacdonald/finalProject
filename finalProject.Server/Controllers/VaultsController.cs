@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace finalProject.Controllers
 {
-    public class VaultsController
+    public class VaultsController : ControllerBase
     {
         private readonly VaultsService _service;
         private readonly AccountService _acctService;
