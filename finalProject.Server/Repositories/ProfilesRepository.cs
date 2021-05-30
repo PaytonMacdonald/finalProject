@@ -14,5 +14,12 @@ namespace finalProject.Repositories
         {
             _db = db;
         }
+        // ////////////////////////////////////////////////////////// //
+        internal Profile GetById(int id)
+        {
+            string sql = "SELECT * FROM accounts WHERE id = @id";
+            return _db.QueryFirstOrDefault<Profile>(sql, new { id });
+        }
+        // ////////////////////////////////////////////////////////// //
     }
 }

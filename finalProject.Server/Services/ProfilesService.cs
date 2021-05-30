@@ -13,5 +13,17 @@ namespace finalProject.Services
         {
             _repo = repo;
         }
+        // ////////////////////////////////////////////////////////// //
+        internal Profile GetById(int id)
+        {
+            Profile profile = _repo.GetById(id);
+            if (profile == null)
+            {
+                throw new Exception("Invalid Profile Id");
+            }
+            return profile;
+        }
+        // ////////////////////////////////////////////////////////// //
+
     }
 }

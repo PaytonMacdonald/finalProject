@@ -13,5 +13,27 @@ namespace finalProject.Services
         {
             _repo = repo;
         }
+        // ////////////////////////////////////////////////////////// //
+        internal VaultKeep Create(VaultKeep vk)
+        {
+            return _repo.Create(vk);
+        }
+        // ////////////////////////////////////////////////////////// //
+        public void Delete(int groupId, string userId)
+        {
+            VaultKeep vaultKeep = _repo.GetById(groupId);
+
+            if (vaultKeep == null)
+            {
+                throw new Exception("Invalid Id");
+            }
+            if (vaultKeep.CreatorId != userId)
+            {
+                throw new Exception("Cannot delete, you do not own this");
+            }
+            _repo.Delete(groupId);
+        }
+        // ////////////////////////////////////////////////////////// //
+
     }
 }

@@ -2,10 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using finalProject.Models;
 using Dapper;
+using finalProject.Models;
 
-namespace finalProject.Services
+namespace finalProject.Repositories
 {
     public class KeepsRepository
     {
@@ -14,46 +14,94 @@ namespace finalProject.Services
         {
             _db = db;
         }
-        public IEnumerable<Keep> GetAll()
+        // ////////////////////////////////////////////////////////// //
+        internal Keep Create(Keep k)
         {
             string sql = @"
-            SELECT
+                INSERT INTO 
+                keeps(creatorId, name, description, img, views, shares, keeps)
+                VALUES (@CreatorId, @Name, @Description, @Img, @Views, @Shares, @Keeps);
+                SELECT LAST_INSERT_ID();
+            ";
+            k.Id = _db.ExecuteScalar<int>(sql, k);
+            return k;
+        }
+        // ////////////////////////////////////////////////////////// //
+        internal List<Keep> GetAll()
+        {
+            string sql = @"
+            SELECT 
             k.*,
-            a.*
+            a.* 
             FROM keeps k
             JOIN accounts a ON k.creatorId = a.id;";
-            return _db.Query<Keep, Account, Keep>(sql, (keep, account) =>
+            return _db.Query<Keep, Profile, Keep>(sql,
+            (k, a) =>
             {
-                keep.Creator = account;
-                return keep;
-            }, splitOn: "id");
+                k.Creator = a;
+                return k;
+            }, splitOn: "id").ToList();
         }
-        public Keep GetById(int id)
+        // ////////////////////////////////////////////////////////// //
+        internal Keep GetById(int id)
+        {
+            string sql = "SELECT * FROM keeps WHERE id = @id";
+            return _db.QueryFirstOrDefault<Keep>(sql, new { id });
+        }
+        // ////////////////////////////////////////////////////////// //
+
+
+
+
+
+        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
+        // I have no idea what I'm doing on this one??????????
+        internal List<Keep> GetKeeps(int id)
         {
             string sql = @"
-              SELECT 
-                c.*,
-                a.* 
-              FROM keeps c
-              JOIN accounts a ON c.creatorId = a.id
-              WHERE id = @id;";
-            return _db.Query<Keep, Account, Keep>(sql, (keep, account) =>
+            SELECT 
+            k.*,
+            a.* 
+            FROM keeps k
+            JOIN accounts a ON k.creatorId = a.id;";
+
+            // what do I even do on this part???
+            return _db.Query<Keep, Profile, Keep>(sql,
+            (k, a) =>
             {
-                keep.Creator = account;
-                return keep;
-            }
-            , new { id }, splitOn: "id").FirstOrDefault();
+                k.Creator = a;
+                return k;
+            }, splitOn: "id").ToList();
         }
-        public Keep Create(Keep newKeep)
+        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
+
+
+
+
+
+        // ////////////////////////////////////////////////////////// //
+        internal Keep Update(Keep k)
         {
             string sql = @"
-            INSERT INTO keeps
-            (creatorId, name, description, img, views, shares, keeps)
-            VALUES
-            (@CreatorId, @Name, @Description, @Img, @Views, @Shares, @Keeps);
-            SELECT LAST_INSERT_ID()";
-            newKeep.Id = _db.ExecuteScalar<int>(sql, newKeep);
-            return newKeep;
+            UPDATE keeps 
+            SET 
+                name = @Name,
+                description = @Description
+                img = @Img
+                views = @Views
+                shares = @Shares
+                keeps = @Keeps
+            WHERE id = @Id;
+            ";
+            _db.Execute(sql, k);
+            return k;
         }
+        // ////////////////////////////////////////////////////////// //
+        internal void Delete(int id)
+        {
+            string sql = "DELETE FROM keeps WHERE id = @id LIMIT 1;";
+            _db.Execute(sql, new { id });
+        }
+        // ////////////////////////////////////////////////////////// //
     }
 }
