@@ -1,13 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
-      <div class="d-flex flex-column align-items-center">
-        <img
-          alt="logo"
-          src="../assets/img/cw-logo.png"
-          height="45"
-        />
-      </div>
+      <h1>KEEPR</h1>
     </router-link>
     <button
       class="navbar-toggler"
@@ -28,8 +22,13 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'About' }" class="nav-link">
-            About
+          <router-link :to="{ name: 'Profile' }" class="nav-link">
+            Profile
+          </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'Vault' }" class="nav-link">
+            Vault
           </router-link>
         </li>
       </ul>
