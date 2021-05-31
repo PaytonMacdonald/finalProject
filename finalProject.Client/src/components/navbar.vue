@@ -1,5 +1,5 @@
 <template>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-lg">
     <router-link class="navbar-brand d-flex" :to="{ name: 'Home' }">
       <h1>KEEPR</h1>
     </router-link>
@@ -16,11 +16,6 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link :to="{ name: 'Home' }" class="nav-link">
-            Home
-          </router-link>
-        </li>
         <li class="nav-item">
           <router-link :to="{ name: 'Profile' }" class="nav-link">
             Profile
@@ -41,34 +36,39 @@
           Login
         </button>
 
-        <div class="dropdown" v-else>
+        <div class="card dropdown pt-2 pb-2 pl-2 pr-2 bg-light shadow-sm" v-else>
           <div
-            class="dropdown-toggle"
+            class="dropdown-toggle text-primary"
             @click="state.dropOpen = !state.dropOpen"
           >
             <img
               :src="user.picture"
               alt="user photo"
               height="40"
-              class="rounded"
+              class="rounded-circle border"
             />
-            <span class="mx-3">{{ user.name }}</span>
+            <span class="mx-3 text-dark"><b>{{ user.name }}</b></span>
           </div>
           <div
             class="dropdown-menu p-0 list-group w-100"
             :class="{ show: state.dropOpen }"
             @click="state.dropOpen = false"
           >
+            <router-link :to="{ name: 'Profile' }">
+              <div class="list-group-item list-group-item-action hoverable">
+                View Profile
+              </div>
+            </router-link>
             <router-link :to="{ name: 'Account' }">
               <div class="list-group-item list-group-item-action hoverable">
-                Account
+                Edit Account
               </div>
             </router-link>
             <div
               class="list-group-item list-group-item-action hoverable"
               @click="logout"
             >
-              logout
+              Logout
             </div>
           </div>
         </div>
@@ -121,6 +121,10 @@ a:hover {
   text-transform: uppercase;
 }
 .nav-item .nav-link.router-link-exact-active{
-  color: var(--primary);
+  color: white;
+  font-weight: 600;
+}
+h1{
+  font-weight: 800;
 }
 </style>
