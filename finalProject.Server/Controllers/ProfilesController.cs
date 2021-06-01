@@ -26,7 +26,7 @@ namespace finalProject.Controllers
         }
         // ////////////////////////////////////////////////////////// //
         [HttpGet("{id}")]
-        public ActionResult<Profile> GetById(int id)
+        public ActionResult<Profile> GetById(string id)
         {
             try
             {
@@ -46,7 +46,7 @@ namespace finalProject.Controllers
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
         [HttpGet("{id}/keeps")]
-        public ActionResult<List<Keep>> GetKeeps(int id)
+        public ActionResult<List<Keep>> GetKeeps(string id)
         {
             try
             {
@@ -72,7 +72,7 @@ namespace finalProject.Controllers
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
         [HttpGet("{id}/vaults")]
-        public ActionResult<List<Vault>> GetVaults(int id)
+        public ActionResult<List<Vault>> GetVaults(string id)
         {
             try
             {

@@ -56,7 +56,7 @@ namespace finalProject.Repositories
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
         // I have no idea what I'm doing on this one??????????
-        internal List<Vault> GetVaults(int id)
+        internal List<Vault> GetVaults(string id)
         {
             string sql = @"
             SELECT 
@@ -86,7 +86,7 @@ namespace finalProject.Repositories
             UPDATE vaults 
             SET 
                 name = @Name,
-                description = @Description
+                description = @Description,
                 isPrivate = @IsPrivate
             WHERE id = @Id;
             ";

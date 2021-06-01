@@ -39,7 +39,7 @@ namespace finalProject.Services
 
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-        internal List<Vault> GetVaults(int id)
+        internal List<Vault> GetVaults(string id)
         {
             return _repo.GetVaults(id);
         }

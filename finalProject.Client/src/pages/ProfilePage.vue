@@ -142,6 +142,12 @@ export default {
     KeepComponent
   }
 }
+// TODO functions
+// Create Vault
+// Create Keep
+// Get Profile
+// Create Get Vaults by Profile Id
+// Get Keeps by Profile Id
 </script>
 
 <style scoped>

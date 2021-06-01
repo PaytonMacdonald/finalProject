@@ -21,6 +21,10 @@ export default {
     KeepComponent
   }
 }
+// TODO functions
+// Delete Vault
+// Edit Vault
+// Get VaultKeeps
 </script>
 
 <style scoped>

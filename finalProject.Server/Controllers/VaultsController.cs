@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace finalProject.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class VaultsController : ControllerBase
     {
         private readonly VaultsService _service;
@@ -71,7 +73,7 @@ namespace finalProject.Controllers
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
         [HttpGet("{id}/keeps")]
-        public ActionResult<List<Keep>> GetKeeps(int id)
+        public ActionResult<List<Keep>> GetKeeps(string id)
         {
             try
             {

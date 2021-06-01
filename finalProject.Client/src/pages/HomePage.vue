@@ -8,17 +8,15 @@
 
 <script>
 import KeepComponent from '../components/KeepComponent'
-// import KeepComponent2 from '../components/KeepComponent2'
-// import KeepComponent3 from '../components/KeepComponent3'
 
 export default {
   name: 'HomePage',
   components: {
     KeepComponent
-    // KeepComponent2,
-    // KeepComponent3
   }
 }
+// TODO functions
+// Get ALL keeps
 </script>
 
 <style scoped>

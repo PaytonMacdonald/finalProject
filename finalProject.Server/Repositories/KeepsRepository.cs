@@ -56,7 +56,7 @@ namespace finalProject.Repositories
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
         // I have no idea what I'm doing on this one??????????
-        internal List<Keep> GetKeeps(int id)
+        internal List<Keep> GetKeeps(string id)
         {
             string sql = @"
             SELECT 
@@ -86,10 +86,10 @@ namespace finalProject.Repositories
             UPDATE keeps 
             SET 
                 name = @Name,
-                description = @Description
-                img = @Img
-                views = @Views
-                shares = @Shares
+                description = @Description,
+                img = @Img,
+                views = @Views,
+                shares = @Shares,
                 keeps = @Keeps
             WHERE id = @Id;
             ";

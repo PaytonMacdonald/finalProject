@@ -17,7 +17,7 @@
       <div class="bottom-right">
         <router-link :to="{ name: 'Profile' }">
           <div class="rounded-circle bg-light">
-            <img class="img-mason rounded-circle border" :src="state.user.picture" alt="" width="30">
+            <img class="img-mason rounded-circle border size-overide" :src="state.user.picture" alt="" width="30">
           </div>
         </router-link>
       </div>
@@ -30,7 +30,12 @@
           <div class="modal-body">
             <div class="row">
               <div class="col col-md-5 d-flex justify-content-start">
-                <img class="img-modal shadow-sm rounded" src="https://homepages.cae.wisc.edu/~ece533/images/airplane.png" alt="">
+                <div class="pocket">
+                  <img class="img-modal shadow-sm rounded" src="https://homepages.cae.wisc.edu/~ece533/images/airplane.png" alt="">
+                  <div class="top-left">
+                    <h6><i class="fas fa-edit fa-2x" /></h6>
+                  </div>
+                </div>
               </div>
               <div class="col col-md-7">
                 <div class="row justify-content-end mr-3">
@@ -40,13 +45,13 @@
                 </div>
                 <div class="row justify-content-center mb-3">
                   <div class="col-3 d-flex justify-content-center align-items-center">
-                    <i class="fas fa-eye text-primary" /> <span class="ml-2">0</span>
+                    <i class="fas fa-eye text-primary" /> <span class="ml-2 text-primary">0</span>
                   </div>
                   <div class="col-3 d-flex justify-content-center align-items-center">
-                    <i class="fas fa-share-square text-primary" /> <span class="ml-2">0</span>
+                    <i class="fas fa-share-square text-primary" /> <span class="ml-2 text-primary">0</span>
                   </div>
                   <div class="col-3 d-flex justify-content-center align-items-center">
-                    <i class="fas fa-share-alt text-primary" /> <span class="ml-2">0</span>
+                    <i class="fas fa-share-alt text-primary" /> <span class="ml-2 text-primary">0</span>
                   </div>
                 </div>
                 <div class="row justify-content-center text-dark">
@@ -69,7 +74,7 @@
                   <div class="col-1 d-flex align-items-center">
                     <img class="rounded-circle" :src="state.user.picture" alt="" width="25">
                   </div>
-                  <div class="col-4 d-flex align-items-center">
+                  <div class="col-4 d-flex align-items-center text-dark">
                     <span>{{ state.user.name }}</span>
                   </div>
                 </div>
@@ -97,6 +102,10 @@ export default {
     }
   }
 }
+// TODO functions
+// Delete Keep
+// Edit Keep
+// Keep by id
 </script>
 
 <style scoped>
@@ -121,6 +130,11 @@ export default {
 }
 .gradient-top{
   background: linear-gradient(transparent, transparent, var(--dark));
+}
+.top-left {
+  position: absolute;
+  top: 0.75rem;
+  left: 1rem;
 }
 .bottom-left {
   position: absolute;

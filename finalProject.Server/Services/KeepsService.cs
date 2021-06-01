@@ -29,7 +29,7 @@ namespace finalProject.Services
 
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-        internal List<Keep> GetKeeps(int id)
+        internal List<Keep> GetKeeps(string id)
         {
             return _repo.GetKeeps(id);
         }

@@ -43,10 +43,18 @@ namespace finalProject.Server
             // NOTE services
             services.AddTransient<AccountService>();
             // services.AddTransient<ValuesService>();
+            services.AddTransient<KeepsService>();
+            services.AddTransient<VaultsService>();
+            services.AddTransient<VaultKeepsService>();
+            services.AddTransient<ProfilesService>();
 
             // NOTE repositories
             services.AddTransient<AccountsRepository>();
             // services.AddTransient<ValuesRepository>();
+            services.AddTransient<KeepsRepository>();
+            services.AddTransient<VaultsRepository>();
+            services.AddTransient<VaultKeepsRepository>();
+            services.AddTransient<ProfilesRepository>();
 
 
         }
