@@ -46,11 +46,11 @@ namespace finalProject.Controllers
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
         [HttpGet("{id}/keeps")]
-        public ActionResult<List<Keep>> GetKeeps(string id)
+        public ActionResult<List<VaultKeepViewModel>> GetKeepsByProfileId(string id)
         {
             try
             {
-                List<Keep> keeps = _kService.GetKeeps(id);
+                List<VaultKeepViewModel> keeps = _kService.GetKeepsByProfileId(id);
                 return Ok(keeps);
             }
             catch (System.Exception e)
@@ -72,11 +72,11 @@ namespace finalProject.Controllers
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
         [HttpGet("{id}/vaults")]
-        public ActionResult<List<Vault>> GetVaults(string id)
+        public ActionResult<List<Vault>> GetVaultsByProfileId(string id)
         {
             try
             {
-                List<Vault> vaults = _vService.GetVaults(id);
+                List<Vault> vaults = _vService.GetVaultsByProfileId(id);
                 return Ok(vaults);
             }
             catch (System.Exception e)

@@ -45,8 +45,17 @@ namespace finalProject.Repositories
         // ////////////////////////////////////////////////////////// //
         internal Keep GetById(int id)
         {
-            string sql = "SELECT * FROM keeps WHERE id = @id";
-            return _db.QueryFirstOrDefault<Keep>(sql, new { id });
+            string sql = @"
+            SELECT 
+            k.*,
+            a.* 
+            FROM keeps k 
+            JOIN accounts a ON k.creatorId = a.id
+            WHERE k.id = @id;";
+            return _db.Query<Keep, Profile, Keep>(sql, (keep, profile) =>
+            {
+                keep.Creator = profile; return keep;
+            }, new { id }, splitOn: "id").FirstOrDefault();
         }
         // ////////////////////////////////////////////////////////// //
 
@@ -55,22 +64,47 @@ namespace finalProject.Repositories
 
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-        // I have no idea what I'm doing on this one??????????
-        internal List<Keep> GetKeeps(string id)
+        internal List<VaultKeepViewModel> GetKeepsByProfileId(string id)
         {
             string sql = @"
             SELECT 
-            k.*,
+            keeps k.*,
+            vk.id AS vaultKeepId,
             a.* 
-            FROM keeps k
-            JOIN accounts a ON k.creatorId = a.id;";
-
-            // what do I even do on this part???
-            return _db.Query<Keep, Profile, Keep>(sql,
-            (k, a) =>
+            FROM vaultkeeps vk
+            JOIN keeps k ON vk.keepId = k.id
+            JOIN accounts a ON k.creatorId = a.id
+            WHERE vk.id = @id";
+            return _db.Query<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql,
+            (vk, a) =>
             {
-                k.Creator = a;
-                return k;
+                vk.Creator = a;
+                return vk;
+            }, splitOn: "id").ToList();
+        }
+        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
+
+
+
+
+
+        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
+        internal List<VaultKeepViewModel> GetKeepsByVaultId(int id)
+        {
+            string sql = @"
+            SELECT 
+            keeps k.*,
+            vk.id AS vaultKeepId,
+            a.* 
+            FROM vaultkeeps vk
+            JOIN keeps k ON vk.keepId = k.id
+            JOIN accounts a ON k.creatorId = a.id
+            WHERE vk.id = @id";
+            return _db.Query<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql,
+            (vk, a) =>
+            {
+                vk.Creator = a;
+                return vk;
             }, splitOn: "id").ToList();
         }
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\

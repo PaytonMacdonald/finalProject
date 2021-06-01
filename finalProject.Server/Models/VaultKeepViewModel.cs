@@ -1,11 +1,8 @@
 namespace finalProject.Models
 {
-    public class VaultKeepViewModel
+    public class VaultKeepViewModel : Keep
     {
-        public int Id { get; set; }
-        public string CreatorId { get; set; }
-        public int VaultId { get; set; }
-        public int KeepId { get; set; }
+        public int vaultKeepId { get; set; }
 
     }
 }

@@ -29,9 +29,20 @@ namespace finalProject.Services
 
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-        internal List<Keep> GetKeeps(string id)
+        internal List<VaultKeepViewModel> GetKeepsByProfileId(string id)
         {
-            return _repo.GetKeeps(id);
+            return _repo.GetKeepsByProfileId(id);
+        }
+        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
+
+
+
+
+
+        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
+        internal List<VaultKeepViewModel> GetKeepsByVaultId(int id)
+        {
+            return _repo.GetKeepsByVaultId(id);
         }
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
 

@@ -73,11 +73,11 @@ namespace finalProject.Controllers
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
         [HttpGet("{id}/keeps")]
-        public ActionResult<List<Keep>> GetKeeps(string id)
+        public ActionResult<List<VaultKeepViewModel>> GetKeepsByVaultId(int id)
         {
             try
             {
-                List<Keep> keeps = _kService.GetKeeps(id);
+                List<VaultKeepViewModel> keeps = _kService.GetKeepsByVaultId(id);
                 return Ok(keeps);
             }
             catch (System.Exception e)

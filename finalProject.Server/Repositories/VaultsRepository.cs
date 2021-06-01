@@ -55,8 +55,7 @@ namespace finalProject.Repositories
 
 
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-        // I have no idea what I'm doing on this one??????????
-        internal List<Vault> GetVaults(string id)
+        internal List<Vault> GetVaultsByProfileId(string id)
         {
             string sql = @"
             SELECT 
@@ -65,7 +64,6 @@ namespace finalProject.Repositories
             FROM vaults v
             JOIN accounts a ON v.creatorId = a.id;";
 
-            // what do I even do on this part???
             return _db.Query<Vault, Profile, Vault>(sql,
             (v, a) =>
             {
