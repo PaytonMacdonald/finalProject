@@ -8,10 +8,12 @@ namespace finalProject.Services
     public class VaultsService
     {
         private readonly VaultsRepository _repo;
+        private readonly AccountsRepository _acctRepo;
 
-        public VaultsService(VaultsRepository repo)
+        public VaultsService(VaultsRepository repo, AccountsRepository acctRepo)
         {
             _repo = repo;
+            _acctRepo = acctRepo;
         }
         // ////////////////////////////////////////////////////////// //
         internal Vault Create(Vault k)
@@ -24,13 +26,22 @@ namespace finalProject.Services
             return _repo.GetAll();
         }
         // ////////////////////////////////////////////////////////// //
-        internal Vault GetById(int id)
+        internal Vault GetById(int id, string creatorId)
         {
             Vault vault = _repo.GetById(id);
+            // Account userInfo.Id == accountId
+            // if (vault.IsPrivate == true && creatorId != accountId)
+            // {
+            //     throw new Exception("This Vault is Private");
+            // }
+            // else
+            // {
+            // }
             if (vault == null)
             {
                 throw new Exception("Invalid Vault Id");
             }
+
             return vault;
         }
         // ////////////////////////////////////////////////////////// //

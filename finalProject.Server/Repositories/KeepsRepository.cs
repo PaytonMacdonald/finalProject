@@ -68,7 +68,7 @@ namespace finalProject.Repositories
         {
             string sql = @"
             SELECT 
-            keeps k.*,
+            k.*,
             vk.id AS vaultKeepId,
             a.* 
             FROM vaultkeeps vk
@@ -93,19 +93,19 @@ namespace finalProject.Repositories
         {
             string sql = @"
             SELECT 
-            keeps k.*,
+            k.*,
             vk.id AS vaultKeepId,
             a.* 
             FROM vaultkeeps vk
             JOIN keeps k ON vk.keepId = k.id
             JOIN accounts a ON k.creatorId = a.id
-            WHERE vk.id = @id";
+            WHERE vk.vaultId = @id;";
             return _db.Query<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql,
             (vk, a) =>
             {
                 vk.Creator = a;
                 return vk;
-            }, splitOn: "id").ToList();
+            }, new { id }, splitOn: "id").ToList();
         }
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
 

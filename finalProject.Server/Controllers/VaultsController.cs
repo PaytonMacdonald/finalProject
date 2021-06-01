@@ -54,11 +54,11 @@ namespace finalProject.Controllers
         }
         // ////////////////////////////////////////////////////////// //
         [HttpGet("{id}")]
-        public ActionResult<Vault> GetById(int id)
+        public ActionResult<Vault> GetById(int id, string creatorId)
         {
             try
             {
-                Vault found = _service.GetById(id);
+                Vault found = _service.GetById(id, creatorId);
                 return Ok(found);
             }
             catch (System.Exception e)
