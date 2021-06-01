@@ -6,7 +6,7 @@ class KeepsService {
     AppState.keeps.push(res.data)
   }
 
-  async getAll() {
+  async getAllKeeps() {
     const res = await api.get('/api/keeps')
     AppState.keeps = res.data
   }
@@ -16,13 +16,14 @@ class KeepsService {
     AppState.activeKeep = res.data
   }
 
-  async update(k) {
-    await api.put(`/api/keeps/${k.id}`, k)
+  async editKeep(data, id) {
+    await api.put('/api/keeps/' + id, data)
+    this.getAllKeeps()
   }
 
-  async remove(k) {
-    await api.delete(`/api/keeps/${k.id}`)
-    AppState.keeps = AppState.keeps.filter(x => x.id !== k.id)
+  async deleteKeep(id) {
+    await api.delete(`/api/keeps/${id}`)
+    AppState.keeps = AppState.keeps.filter(x => x.id !== id)
   }
 }
 

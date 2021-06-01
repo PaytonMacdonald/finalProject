@@ -26,7 +26,7 @@ CREATE TABLE IF NOT EXISTS vaults(
   creatorId VARCHAR(255) NOT NULL COMMENT 'FK: User Account',
   name varchar(255) NOT NULL COMMENT 'Keep Name',
   description VARCHAR(255) COMMENT 'keep Description',
-  isPrivate BOOLEAN NOT NULL,
+  isPrivate BOOLEAN,
   FOREIGN KEY (creatorId) REFERENCES accounts(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
 CREATE TABLE IF NOT EXISTS vaultkeeps(
@@ -40,4 +40,7 @@ CREATE TABLE IF NOT EXISTS vaultkeeps(
   FOREIGN KEY (keepId) REFERENCES keeps(id) ON DELETE CASCADE,
   FOREIGN KEY (vaultId) REFERENCES vaults(id) ON DELETE CASCADE
 ) default charset utf8 COMMENT '';
-DROP TABLE accounts
+DROP TABLE vaultkeeps;
+DROP TABLE vaults;
+DROP TABLE keeps;
+DROP TABLE accounts;

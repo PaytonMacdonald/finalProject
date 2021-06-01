@@ -80,7 +80,7 @@ namespace finalProject.Repositories
             {
                 vk.Creator = a;
                 return vk;
-            }, splitOn: "id").ToList();
+            }, new { id }, splitOn: "id").ToList();
         }
         // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
 

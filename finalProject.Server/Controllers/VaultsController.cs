@@ -54,11 +54,12 @@ namespace finalProject.Controllers
         }
         // ////////////////////////////////////////////////////////// //
         [HttpGet("{id}")]
-        public ActionResult<Vault> GetById(int id, string creatorId)
+        public async Task<ActionResult<Vault>> GetById(int id)
         {
             try
             {
-                Vault found = _service.GetById(id, creatorId);
+                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+                Vault found = _service.GetById(id, userInfo);
                 return Ok(found);
             }
             catch (System.Exception e)

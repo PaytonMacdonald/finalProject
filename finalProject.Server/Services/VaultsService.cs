@@ -26,23 +26,18 @@ namespace finalProject.Services
             return _repo.GetAll();
         }
         // ////////////////////////////////////////////////////////// //
-        internal Vault GetById(int id, string creatorId)
+        internal Vault GetById(int id, Account userInfo)
         {
             Vault vault = _repo.GetById(id);
-            // Account userInfo.Id == accountId
-            // if (vault.IsPrivate == true && creatorId != accountId)
-            // {
-            //     throw new Exception("This Vault is Private");
-            // }
-            // else
-            // {
-            // }
-            if (vault == null)
+            if (vault.IsPrivate == false || vault.CreatorId == userInfo.Id)
             {
-                throw new Exception("Invalid Vault Id");
+                if (vault == null)
+                {
+                    throw new Exception("Invalid Vault Id");
+                }
+                return vault;
             }
-
-            return vault;
+            throw new Exception("You Don't Have Access to This Vault");
         }
         // ////////////////////////////////////////////////////////// //
 

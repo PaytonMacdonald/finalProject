@@ -50,19 +50,20 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
+          <!-- TODO setup the @submit and the v-models -->
           <form>
             <div class="modal-body">
               <div class="form-group text-dark">
-                <label for="keepTitle">Title</label>
-                <input type="email" class="form-control" id="keepTitle" aria-describedby="emailHelp" placeholder="Title...">
+                <label for="keepTitle">New Title</label>
+                <input type="email" class="form-control" id="keepTitle" aria-describedby="emailHelp" placeholder="New Title...">
               </div>
               <div class="form-group text-dark">
-                <label for="keepImgUrl">Image URL</label>
-                <input type="email" class="form-control" id="keepImgUrl" aria-describedby="emailHelp" placeholder="URL...">
+                <label for="keepImgUrl">New Image URL</label>
+                <input type="email" class="form-control" id="keepImgUrl" aria-describedby="emailHelp" placeholder="New URL...">
               </div>
               <div class="form-group text-dark">
-                <label for="keepDescription">Description</label>
-                <textarea class="form-control" id="keepDescription" rows="3" placeholder="Description..."></textarea>
+                <label for="keepDescription">New Description</label>
+                <textarea class="form-control" id="keepDescription" rows="3" placeholder="New Description..."></textarea>
               </div>
             </div>
             <div class="modal-footer">

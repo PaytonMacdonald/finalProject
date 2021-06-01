@@ -1,39 +1,39 @@
 <template>
-  <div class="mt-4 d-flex flex-column justify-content-center align-items-center">
+  <div class="mt-4 col-3 d-flex flex-column justify-content-center align-items-center">
     <div class="img-mason pocket rounded shadow-sm">
       <div class="gradient-top">
-        <img class="img-mason"
-             src="https://homepages.cae.wisc.edu/~ece533/images/airplane.png"
+        <img class="img-mason rounded border shadow-sm"
+             :src="keepProp.img"
              alt=""
              data-toggle="modal"
-             data-target=".bd-example-modal-lg"
+             :data-target="'.keepModal' + keepProp.id"
              title="click for details"
              index="-1"
         >
       </div>
       <div class="bottom-left">
-        <h6>Keep Title</h6>
+        <h6>{{ keepProp.name }}</h6>
       </div>
       <div class="bottom-right">
         <router-link :to="{ name: 'Profile' }">
           <div class="rounded-circle bg-light">
-            <img class="img-mason rounded-circle border size-overide" :src="state.user.picture" alt="" width="30">
+            <img class="img-mason rounded-circle border size-overide" :src="keepProp.creator.picture" alt="" width="30">
           </div>
         </router-link>
       </div>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div :class="'modal ' + 'fade ' + 'keepModal' + keepProp.id" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content border border-primary">
           <div class="modal-body">
             <div class="row">
               <div class="col col-md-5 d-flex justify-content-start">
                 <div class="pocket">
-                  <img class="img-modal shadow-sm rounded" src="https://homepages.cae.wisc.edu/~ece533/images/airplane.png" alt="">
+                  <img class="img-modal shadow-sm rounded" :src="keepProp.img">
                   <div class="top-left">
-                    <h6><i class="fas fa-edit fa-2x" /></h6>
+                    <h6><i class="delete-button fas fa-edit fa-2x" data-toggle="modal" :data-target="'#EditKeep' + keepProp.id" /></h6>
                   </div>
                 </div>
               </div>
@@ -55,11 +55,11 @@
                   </div>
                 </div>
                 <div class="row justify-content-center text-dark">
-                  <h2>Keep Name</h2>
+                  <h2>{{ keepProp.name }}</h2>
                 </div>
                 <div class="row justify-content-center mx-2 text-dark mb-4 border-bottom border-primary">
                   <p class="mx-4">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quidem enim, dolores provident earum, nam voluptatibus error omnis voluptatum sapiente voluptates debitis distinctio fugiat velit, incidunt nihil? Et qui sequi voluptatibus.
+                    {{ keepProp.description }}
                   </p>
                 </div>
                 <div class="row justify-content-center mx-2">
@@ -69,13 +69,13 @@
                     </button>
                   </div>
                   <div class="col-2 d-flex align-items-center">
-                    <i class="delete-button fas fa-trash fa-2x text-danger" title="delete this keep" />
+                    <i class="delete-button fas fa-trash fa-2x text-danger" title="delete this keep" @click="deleteKeep(keepProp.id)" />
                   </div>
                   <div class="col-1 d-flex align-items-center">
-                    <img class="rounded-circle" :src="state.user.picture" alt="" width="25">
+                    <img class="rounded-circle" :src="keepProp.creator.picture" alt="" width="25">
                   </div>
                   <div class="col-4 d-flex align-items-center text-dark">
-                    <span>{{ state.user.name }}</span>
+                    <span>{{ keepProp.creator.name }}</span>
                   </div>
                 </div>
               </div>
@@ -84,21 +84,96 @@
         </div>
       </div>
     </div>
+    <!-- MODAL FORM 1 KEEPS -->
+    <div class="modal fade"
+         :id="'EditKeep' + keepProp.id"
+         tabindex="-1"
+         role="dialog"
+         aria-labelledby="NewKeepLabel"
+         aria-hidden="true"
+    >
+      <div class="modal-dialog" role="document">
+        <div class="modal-content  border border-primary">
+          <div class="modal-header bg-primary">
+            <h2 class="modal-title" id="NewKeepLabel">
+              Edit Keep
+            </h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <form>
+            <div class="modal-body">
+              <div class="form-group text-dark">
+                <label for="keepTitle">Title</label>
+                <input type="email" class="form-control" id="keepTitle" aria-describedby="emailHelp" placeholder="Title...">
+              </div>
+              <div class="form-group text-dark">
+                <label for="keepImgUrl">Image URL</label>
+                <input type="email" class="form-control" id="keepImgUrl" aria-describedby="emailHelp" placeholder="URL...">
+              </div>
+              <div class="form-group text-dark">
+                <label for="keepDescription">Description</label>
+                <textarea class="form-control" id="keepDescription" rows="3" placeholder="Description..."></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- END MODAL -->
   </div>
 </template>
 
 <script>
 import { AppState } from '../AppState'
 import { computed, reactive } from 'vue'
+import { keepsService } from '../services/KeepsService'
+import Notification from '../utils/Notification'
+import $ from 'jquery'
 
 export default {
   name: 'Keep',
-  setup() {
+  props: {
+    keepProp: {
+      type: Object,
+      required: true
+    }
+  },
+  setup(props) {
     const state = reactive({
-      user: computed(() => AppState.user)
+      keeps: computed(() => AppState.keeps),
+      user: computed(() => AppState.user),
+      newKeepEdit: {}
     })
     return {
-      state
+      state,
+      async deleteKeep(id) {
+        try {
+          if (await Notification.confirmAction('Are you sure you want to delete this bokeepard?')) {
+            $('.keepModal' + props.keepProp.id).modal('hide')
+            await keepsService.deleteKeep(id)
+            await keepsService.getAllKeeps()
+            Notification.toast('Keep Deleted', 'success')
+          }
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
+      async editKeep() {
+        try {
+          await keepsService.editKeep(state.newKeepName, props.keepProp.id)
+          state.newKeepEdit = {}
+          Notification.toast('Keep Updated!', 'success')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   }
 }
