@@ -68,17 +68,13 @@ namespace finalProject.Controllers
             }
         }
         // ////////////////////////////////////////////////////////// //
-
-
-
-
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
         [HttpGet("{id}/keeps")]
-        public ActionResult<List<VaultKeepViewModel>> GetKeepsByVaultId(int id)
+        public async Task<ActionResult<List<VaultKeepViewModel>>> GetKeepsByVaultId(int id)
         {
             try
             {
-                List<VaultKeepViewModel> keeps = _kService.GetKeepsByVaultId(id);
+                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+                List<VaultKeepViewModel> keeps = _kService.GetKeepsByVaultId(id, userInfo);
                 return Ok(keeps);
             }
             catch (System.Exception e)
@@ -86,12 +82,6 @@ namespace finalProject.Controllers
                 return BadRequest(e.Message);
             }
         }
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-
-
-
-
-
         // ////////////////////////////////////////////////////////// //
         [Authorize]
         [HttpPut("{id}")]

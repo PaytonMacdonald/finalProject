@@ -10,7 +10,7 @@ namespace finalProject.Models
         [Required]
         public string Name { get; set; }
         public string Description { get; set; }
-        public bool? IsPrivate { get; set; }
+        public bool IsPrivate { get; set; }
         // Virtual
         public Profile Creator { get; set; }
     }

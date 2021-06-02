@@ -58,37 +58,23 @@ namespace finalProject.Repositories
             }, new { id }, splitOn: "id").FirstOrDefault();
         }
         // ////////////////////////////////////////////////////////// //
-
-
-
-
-
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-        internal List<VaultKeepViewModel> GetKeepsByProfileId(string id)
+        internal List<Keep> GetKeepsByProfileId(string id)
         {
             string sql = @"
             SELECT 
             k.*,
-            vk.id AS vaultKeepId,
             a.* 
-            FROM vaultkeeps vk
-            JOIN keeps k ON vk.keepId = k.id
+            FROM keeps k
             JOIN accounts a ON k.creatorId = a.id
-            WHERE vk.id = @id";
-            return _db.Query<VaultKeepViewModel, Profile, VaultKeepViewModel>(sql,
+            WHERE k.creatorId = @id;";
+            return _db.Query<Keep, Profile, Keep>(sql,
             (vk, a) =>
             {
                 vk.Creator = a;
                 return vk;
             }, new { id }, splitOn: "id").ToList();
         }
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-
-
-
-
-
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
+        // ////////////////////////////////////////////////////////// //
         internal List<VaultKeepViewModel> GetKeepsByVaultId(int id)
         {
             string sql = @"
@@ -107,12 +93,6 @@ namespace finalProject.Repositories
                 return vk;
             }, new { id }, splitOn: "id").ToList();
         }
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-
-
-
-
-
         // ////////////////////////////////////////////////////////// //
         internal Keep Update(Keep k)
         {

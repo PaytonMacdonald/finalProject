@@ -49,34 +49,22 @@ namespace finalProject.Repositories
             return _db.QueryFirstOrDefault<Vault>(sql, new { id });
         }
         // ////////////////////////////////////////////////////////// //
-
-
-
-
-
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-        internal List<Vault> GetVaultsByProfileId(string id)
+        internal IEnumerable<Vault> GetVaultsByProfileId(string id)
         {
             string sql = @"
             SELECT 
             v.*,
             a.* 
             FROM vaults v
-            JOIN accounts a ON v.creatorId = a.id;";
-
+            JOIN accounts a ON v.creatorId = a.id
+            WHERE v.creatorId = @id;";
             return _db.Query<Vault, Profile, Vault>(sql,
             (v, a) =>
             {
                 v.Creator = a;
                 return v;
-            }, splitOn: "id").ToList();
+            }, new { id }, splitOn: "id").ToList();
         }
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-
-
-
-
-
         // ////////////////////////////////////////////////////////// //
         internal Vault Update(Vault v)
         {

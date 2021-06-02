@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using finalProject.Models;
 using finalProject.Repositories;
 
@@ -40,21 +41,11 @@ namespace finalProject.Services
             throw new Exception("You Don't Have Access to This Vault");
         }
         // ////////////////////////////////////////////////////////// //
-
-
-
-
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-        internal List<Vault> GetVaultsByProfileId(string id)
+        internal IEnumerable<Vault> GetVaultsByProfileId(string id, Account userInfo)
         {
-            return _repo.GetVaultsByProfileId(id);
+            IEnumerable<Vault> vaults = _repo.GetVaultsByProfileId(id);
+            return vaults.ToList().FindAll(v => v.IsPrivate == false);
         }
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-
-
-
-
-
         // ////////////////////////////////////////////////////////// //
         internal Vault Update(Vault v, string id)
         {

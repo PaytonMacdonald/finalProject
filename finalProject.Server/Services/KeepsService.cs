@@ -8,10 +8,12 @@ namespace finalProject.Services
     public class KeepsService
     {
         private readonly KeepsRepository _repo;
+        private readonly VaultsRepository _vRepo;
 
-        public KeepsService(KeepsRepository repo)
+        public KeepsService(KeepsRepository repo, VaultsRepository vRepo)
         {
             _repo = repo;
+            _vRepo = vRepo;
         }
         // ////////////////////////////////////////////////////////// //
         internal Keep Create(Keep k)
@@ -24,34 +26,25 @@ namespace finalProject.Services
             return _repo.GetAll();
         }
         // ////////////////////////////////////////////////////////// //
-
-
-
-
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-        internal List<VaultKeepViewModel> GetKeepsByProfileId(string id)
+        internal List<Keep> GetKeepsByProfileId(string id)
         {
             return _repo.GetKeepsByProfileId(id);
         }
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-
-
-
-
-
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-        internal List<VaultKeepViewModel> GetKeepsByVaultId(int id)
-        {
-            return _repo.GetKeepsByVaultId(id);
-        }
-        // FIXME \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\ \\
-
-
-
-
-
         // ////////////////////////////////////////////////////////// //
-
+        internal List<VaultKeepViewModel> GetKeepsByVaultId(int id, Account userInfo)
+        {
+            Vault vault = _vRepo.GetById(id);
+            if (vault.IsPrivate == false || vault.CreatorId == userInfo.Id)
+            {
+                if (vault == null)
+                {
+                    throw new Exception("Invalid Vault Id");
+                }
+                return _repo.GetKeepsByVaultId(id);
+            }
+            throw new Exception("You Don't Have Access to This Vault");
+        }
+        // ////////////////////////////////////////////////////////// //
         internal Keep GetById(int id)
         {
             Keep keep = _repo.GetById(id);
@@ -62,8 +55,6 @@ namespace finalProject.Services
             return keep;
         }
         // ////////////////////////////////////////////////////////// //
-
-        // NOTE JAKE's WAY
         internal Keep Update(Keep k, string id)
         {
             Keep keep = _repo.GetById(k.Id);
@@ -77,27 +68,6 @@ namespace finalProject.Services
             }
             return _repo.Update(k);
         }
-
-        // NOTE MARK's WAY
-        // internal Car Update(int id, Car update)
-        // {
-        //     Car original = GetById(update.Id);
-        //     original.CreatorId = update.CreatorId.Length > 0 ? update.CreatorId : original.CreatorId;
-        //     original.Name = update.Name.Length > 0 ? update.Name : original.Name;
-        //     original.Description = update.Description.Length > 0 ? update.Description : original.Description;
-        //     original.Img = update.Img.Length > 0 ? update.Img : original.Description;
-        //     original.Views = update.Views > 0 ? update.Views : original.Views;
-        //     original.Shares = update.Shares > 0 ? update.Shares : original.Shares;
-        //     original.Keeps = update.Keeps > 0 ? update.Keeps : original.Keeps;
-        //     // original.Creator = update.Creator.Length > 0 ? update.Creator : original.Creator;
-        //     // original.published = update.published != null ? update.published : original.published; // NOTE BOOL
-        //     if (_repo.Update(id, original))
-        //     {
-        //         return original;
-        //     }
-        //     throw new Exception("Something Went Wrong???");
-        // }
-
         // ////////////////////////////////////////////////////////// //
         internal void Delete(int id, string userId)
         {
