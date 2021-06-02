@@ -99,6 +99,13 @@
                     <span>{{ keepProp.creator.name }}</span>
                   </div> -->
                 </div>
+                <div class="row justify-content-start mx-4 mt-3">
+                  <div v-if="keepProp.creatorId == state.account.id && keepProp.vaultKeepId != null">
+                    <button type="button" class="btn btn-warning" @click="deleteVaultKeep(keepProp.vaultKeepId)">
+                      remove from vault
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -183,6 +190,17 @@ export default {
           await vaultkeepsService.createVaultKeep(state.newVaultKeep)
           Notification.toast('Keep Added to Vault!', 'success')
           $('.keepModal' + props.keepProp.id).modal('hide')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
+      async deleteVaultKeep(id) {
+        try {
+          if (await Notification.confirmAction('Are you sure you want to delete this keep?')) {
+            $('.keepModal' + props.keepProp.id).modal('hide')
+            await vaultkeepsService.deleteVaultKeep(id)
+            Notification.toast('Keep Deleted', 'success')
+          }
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }

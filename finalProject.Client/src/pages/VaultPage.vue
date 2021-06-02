@@ -1,10 +1,18 @@
 <template>
   <div class="container-fluid mx-5">
     <div class="row mx-5 mt-5 d-flex align-items-center">
-      <h1>{{ state.activeVault.name }} <i class="ml-3 fas fa-trash text-danger delete-button" /></h1>
+      <h1>
+        {{ state.activeVault.name }}
+        <span v-if="state.activeVault.creatorId == state.account.id">
+          <i class="ml-3 fas fa-trash text-danger delete-button" @click="deleteVault(state.activeVault.id)" title="delete this vault" />
+        </span>
+      </h1>
+    </div>
+    <div class="row mx-5 mt-2">
+      <p>{{ state.activeVault.description }}</p>
     </div>
     <div class="row mx-5 mt-1 border-bottom border-primary pb-4">
-      <h4>keeps: 0</h4>
+      <h4>keeps: {{ state.keeps.length }}</h4>
     </div>
     <div class="row mx-5 mt-3">
       <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
@@ -27,19 +35,30 @@ export default {
     const route = useRoute()
     const state = reactive({
       user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps),
       activeVault: computed(() => AppState.activeVault)
     })
     onMounted(async() => {
       try {
-        await keepsService.getKeepsByVaultId(state.activeVault.id)
         await vaultsService.getVaultById(route.params.id)
+        await keepsService.getKeepsByVaultId(route.params.id)
       } catch (error) {
         Notification.toast('Error:' + error, 'error')
       }
     })
     return {
-      state
+      state,
+      async deleteVault(id) {
+        try {
+          if (await Notification.confirmAction('Are you sure you want to delete this vault?')) {
+            await vaultsService.deleteVault(id)
+            Notification.toast('Keep Deleted', 'success')
+          }
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      }
     }
   },
   components: {

@@ -122,10 +122,11 @@
                 <label for="vaultDescription">Description</label>
                 <textarea class="form-control" id="vaultDescription" rows="3" placeholder="Description..." v-model="state.newVault.description"></textarea>
               </div>
-              <div class="form-check text-dark">
+              <!-- TODO private option needs to work -->
+              <!-- <div class="form-check text-dark">
                 <input type="checkbox" class="form-check-input" id="privateVault">
                 <label class="form-check-label" for="privateVault">Private Vault</label>
-              </div>
+              </div> -->
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">
@@ -192,8 +193,8 @@ export default {
         try {
           await vaultsService.createVault(state.newVault)
           state.newVault = {}
-          $('.NewVault').modal('hide')
-          await vaultsService.getVaultsByProfileId()
+          await vaultsService.getVaultsByProfileId(route.params.id)
+          $('#NewVault').modal('hide')
           Notification.toast('Vault Created!', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')

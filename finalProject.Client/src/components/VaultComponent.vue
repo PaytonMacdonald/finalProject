@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-4 d-flex flex-column justify-content-center align-items-center">
+  <div class="col-3 mt-4 d-flex flex-column justify-content-center align-items-center">
     <router-link :to="{ name: 'VaultPage', params: {id: vaultProp.id}}" class="nav-link">
       <div class="img-mason pocket rounded shadow-sm">
         <div class="gradient-top">
@@ -20,6 +20,7 @@
 <script>
 import { AppState } from '../AppState'
 import { computed, reactive } from 'vue'
+// import { keepsService } from '../services/KeepsService'
 
 export default {
   name: 'Vault',
@@ -29,10 +30,18 @@ export default {
       required: true
     }
   },
-  setup() {
+  setup(props) {
     const state = reactive({
-      user: computed(() => AppState.user)
+      user: computed(() => AppState.user),
+      keeps: computed(() => AppState.keeps)
     })
+    // onMounted(async() => {
+    //   try {
+    //     await keepsService.getKeepsByVaultId(props.vaultProp.id)
+    //   } catch (error) {
+    //     Notification.toast('Error:' + error, 'error')
+    //   }
+    // })
     return {
       state
     }

@@ -1,5 +1,6 @@
 import { AppState } from '../AppState'
 import { api } from './AxiosService'
+import router from '../router.js'
 class VaultsService {
   async createVault(data) {
     const res = await api.post('/api/vaults', data)
@@ -23,6 +24,7 @@ class VaultsService {
   async deleteVault(id) {
     await api.delete(`/api/vaults/${id}`)
     AppState.vaults = AppState.vaults.filter(x => x.id !== id)
+    router.push({ name: 'ProfilePage', params: { id: AppState.account.id } })
   }
 }
 
