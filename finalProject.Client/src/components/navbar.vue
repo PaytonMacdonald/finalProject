@@ -17,13 +17,9 @@
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link :to="{ name: 'Profile' }" class="nav-link">
-            Profile
-          </router-link>
-        </li>
-        <li class="nav-item">
+        </li><li class="nav-item">
           <router-link :to="{ name: 'Vault' }" class="nav-link">
-            Vault
+            Vault(testlink)
           </router-link>
         </li>
       </ul>
@@ -54,11 +50,11 @@
             :class="{ show: state.dropOpen }"
             @click="state.dropOpen = false"
           >
-            <router-link :to="{ name: 'Profile' }">
+            <!-- <router-link :to="{ name: 'ProfilePage', params: user.id }">
               <div class="list-group-item list-group-item-action hoverable">
                 View Profile
               </div>
-            </router-link>
+            </router-link> -->
             <router-link :to="{ name: 'Account' }">
               <div class="list-group-item list-group-item-action hoverable">
                 Edit Account

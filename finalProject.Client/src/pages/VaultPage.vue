@@ -7,16 +7,36 @@
       <h4>keeps: 0</h4>
     </div>
     <div class="row mx-5 mt-3">
-      <KeepComponent />
+      <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
     </div>
   </div>
 </template>
 
 <script>
+import { AppState } from '../AppState'
+import { reactive, computed, onMounted } from 'vue'
+import { keepsService } from '../services/KeepsService'
 import KeepComponent from '../components/KeepComponent'
+import Notification from '../utils/Notification'
 
 export default {
   name: 'VaultPage',
+  setup() {
+    const state = reactive({
+      user: computed(() => AppState.user),
+      keeps: computed(() => AppState.keeps)
+    })
+    onMounted(async() => {
+      try {
+        await keepsService.getAllKeeps()
+      } catch (error) {
+        Notification.toast('Error:' + error, 'error')
+      }
+    })
+    return {
+      state
+    }
+  },
   components: {
     KeepComponent
   }

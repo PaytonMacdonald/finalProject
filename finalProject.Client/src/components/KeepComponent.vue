@@ -15,11 +15,13 @@
         <h6>{{ keepProp.name }}</h6>
       </div>
       <div class="bottom-right">
-        <router-link :to="{ name: 'Profile' }">
-          <div class="rounded-circle bg-light">
+        <div class="rounded-circle bg-light">
+          <router-link :to="{ name: 'ProfilePage', params: keepProp.creator.id }">
+            <!-- TODO needs params: keepProp.creator.id-->
             <img class="img-mason rounded-circle border size-overide" :src="keepProp.creator.picture" alt="" width="30">
-          </div>
-        </router-link>
+          </router-link>
+          <!-- </router-link> -->
+        </div>
       </div>
     </div>
 

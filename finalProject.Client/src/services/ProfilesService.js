@@ -6,9 +6,9 @@ class KeepsService {
     AppState.keeps = res.data
   }
 
-  async getById(p) {
-    const res = await api.get('api/profiles/', p)
-    AppState.activeKeep = res.data
+  async getProfileById(id) {
+    const res = await api.get('api/profiles/' + id)
+    AppState.activeProfile = res.data
   }
 }
 
