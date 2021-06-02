@@ -2,7 +2,7 @@
   <div class="mt-4 col-3 d-flex flex-column justify-content-center align-items-center">
     <div class="img-mason pocket rounded shadow-sm">
       <div class="gradient-top">
-        <img class="img-mason rounded border shadow-sm"
+        <img class="img-mason rounded border shadow"
              :src="keepProp.img"
              alt=""
              data-toggle="modal"
@@ -15,12 +15,10 @@
         <h6>{{ keepProp.name }}</h6>
       </div>
       <div class="bottom-right">
-        <div class="rounded-circle bg-light">
-          <router-link :to="{ name: 'ProfilePage', params: keepProp.creator.id }">
-            <!-- TODO needs params: keepProp.creator.id-->
-            <img class="img-mason rounded-circle border size-overide" :src="keepProp.creator.picture" alt="" width="30">
+        <div class="rounded bg-light">
+          <router-link :to="{ name: 'ProfilePage', params: {id: keepProp.creator.id}}">
+            <img class="img-mason rounded border size-overide" :src="keepProp.creator.picture" alt="" width="30">
           </router-link>
-          <!-- </router-link> -->
         </div>
       </div>
     </div>
@@ -64,21 +62,42 @@
                     {{ keepProp.description }}
                   </p>
                 </div>
-                <div class="row justify-content-center mx-2">
+                <div class="row align-items-end justify-content-between pr-4 mx-2">
                   <div class="col-5">
-                    <button type="button" class="btn btn-outline-primary">
-                      add to a vault
-                    </button>
+                    <!-- TODO attach a v-if that hides button when in a vault -->
+                    <div class="dropdown">
+                      <button class="btn btn-primary dropdown-toggle"
+                              type="button"
+                              id="dropdownMenuButton"
+                              data-toggle="dropdown"
+                              aria-haspopup="true"
+                              aria-expanded="false"
+                      >
+                        add to vault
+                      </button>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="ml-2" v-for="vault in state.vaults" :key="vault.id" href="#" @click="createVaultKeep(vault.id)">
+                          {{ vault.name }}
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                  <div class="col-2 d-flex align-items-center">
-                    <i class="delete-button fas fa-trash fa-2x text-danger" title="delete this keep" @click="deleteKeep(keepProp.id)" />
+                  <div v-if="keepProp.creatorId == state.account.id">
+                    <div class="col-2 d-flex align-items-center">
+                      <i class="delete-button fas fa-trash fa-2x text-danger" title="delete this keep" @click="deleteKeep(keepProp.id)" />
+                    </div>
                   </div>
                   <div class="col-1 d-flex align-items-center">
-                    <img class="rounded-circle" :src="keepProp.creator.picture" alt="" width="25">
+                    <router-link :to="{ name: 'ProfilePage', params: {id: keepProp.creator.id}}"
+                                 data-dismiss="modal"
+                                 :data-target="'.keepModal' + keepProp.id"
+                    >
+                      <img class="rounded border" :src="keepProp.creator.picture" alt="" width="40" :title="keepProp.creator.name">
+                    </router-link>
                   </div>
-                  <div class="col-4 d-flex align-items-center text-dark">
+                  <!-- <div class="col-4 d-flex align-items-center text-dark">
                     <span>{{ keepProp.creator.name }}</span>
-                  </div>
+                  </div> -->
                 </div>
               </div>
             </div>
@@ -136,6 +155,7 @@
 import { AppState } from '../AppState'
 import { computed, reactive } from 'vue'
 import { keepsService } from '../services/KeepsService'
+import { vaultkeepsService } from '../services/VaultKeepsService'
 import Notification from '../utils/Notification'
 import $ from 'jquery'
 
@@ -150,17 +170,28 @@ export default {
   setup(props) {
     const state = reactive({
       keeps: computed(() => AppState.keeps),
+      vaults: computed(() => AppState.vaults),
       user: computed(() => AppState.user),
-      newKeepEdit: {}
+      account: computed(() => AppState.account),
+      newVaultKeep: {}
     })
     return {
       state,
+      async createVaultKeep(id) {
+        try {
+          state.newVaultKeep = { vaultId: id, keepId: props.keepProp.id }
+          await vaultkeepsService.createVaultKeep(state.newVaultKeep)
+          Notification.toast('Keep Added to Vault!', 'success')
+          $('.keepModal' + props.keepProp.id).modal('hide')
+        } catch (error) {
+          Notification.toast('Error: ' + error, 'error')
+        }
+      },
       async deleteKeep(id) {
         try {
-          if (await Notification.confirmAction('Are you sure you want to delete this bokeepard?')) {
+          if (await Notification.confirmAction('Are you sure you want to delete this keep?')) {
             $('.keepModal' + props.keepProp.id).modal('hide')
             await keepsService.deleteKeep(id)
-            await keepsService.getAllKeeps()
             Notification.toast('Keep Deleted', 'success')
           }
         } catch (error) {
@@ -177,12 +208,14 @@ export default {
         }
       }
     }
+  },
+  components: {
+    // AddToVaultComponent
   }
 }
-// TODO functions
-// Delete Keep
+// TODO FUNCTIONS NEEDED
+// Get Vaults By Profile ID
 // Edit Keep
-// Keep by id
 </script>
 
 <style scoped>

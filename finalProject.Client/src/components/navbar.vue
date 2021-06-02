@@ -16,12 +16,12 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mr-auto">
-        <li class="nav-item">
+        <!-- <li class="nav-item">
         </li><li class="nav-item">
           <router-link :to="{ name: 'Vault' }" class="nav-link">
             Vault(testlink)
           </router-link>
-        </li>
+        </li> -->
       </ul>
       <span class="navbar-text">
         <button
@@ -41,7 +41,7 @@
               :src="user.picture"
               alt="user photo"
               height="40"
-              class="rounded-circle border"
+              class="rounded border"
             />
             <span class="mx-3 text-dark"><b>{{ user.name }}</b></span>
           </div>
@@ -50,11 +50,11 @@
             :class="{ show: state.dropOpen }"
             @click="state.dropOpen = false"
           >
-            <!-- <router-link :to="{ name: 'ProfilePage', params: user.id }">
+            <router-link :to="{ name: 'ProfilePage', params: {id: account.id}}">
               <div class="list-group-item list-group-item-action hoverable">
                 View Profile
               </div>
-            </router-link> -->
+            </router-link>
             <router-link :to="{ name: 'Account' }">
               <div class="list-group-item list-group-item-action hoverable">
                 Edit Account
@@ -86,6 +86,7 @@ export default {
     return {
       state,
       user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
       async login() {
         AuthService.loginWithPopup()
       },

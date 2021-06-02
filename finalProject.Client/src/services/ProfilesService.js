@@ -1,15 +1,12 @@
 import { AppState } from '../AppState'
+import { logger } from '../utils/Logger'
 import { api } from './AxiosService'
-class KeepsService {
-  async getAll() {
-    const res = await api.get('/api/keeps')
-    AppState.keeps = res.data
-  }
-
+class ProfilesService {
   async getProfileById(id) {
-    const res = await api.get('api/profiles/' + id)
+    logger.log('connected2')
+    const res = await api.get(`api/profiles/${id}`)
     AppState.activeProfile = res.data
   }
 }
 
-export const keepsService = new KeepsService()
+export const profilesService = new ProfilesService()

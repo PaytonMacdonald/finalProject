@@ -2,17 +2,17 @@
   <div class="container-fluid mx-5 mt-5">
     <div class="row border-bottom border-primary pb-5 mx-5">
       <div class="col-1 d-flex align-items-center">
-        <img class="rounded" :src="state.user.picture" alt="">
+        <img class="rounded shadow border" :src="state.activeProfile.picture" alt="">
       </div>
       <div class="col ml-5">
         <h2 class="">
-          {{ state.user.name }}
+          {{ state.activeProfile.name }}
         </h2>
         <h4 class="text-white">
           Vaults: 0
         </h4>
         <h4 class="text-white">
-          Keeps: 0
+          Keeps: {{ state.keeps.length }}
         </h4>
       </div>
     </div>
@@ -22,7 +22,7 @@
       </h1>
     </div>
     <div class="row mx-5 border-bottom border-primary pb-5">
-      <VaultComponent />
+      <VaultComponent v-for="vault in state.vaults" :key="vault.id" :vault-prop="vault" />
     </div>
     <div class="row mt-4 mx-5">
       <h1 class="text-white">
@@ -150,6 +150,8 @@ import { useRoute } from 'vue-router'
 import VaultComponent from '../components/VaultComponent'
 import KeepComponent from '../components/KeepComponent'
 import Notification from '../utils/Notification'
+import $ from 'jquery'
+
 // import router from '../router.js' // NOTE use this if you need to auto push somewhere
 
 export default {
@@ -159,16 +161,18 @@ export default {
     const state = reactive({
       user: computed(() => AppState.user),
       keeps: computed(() => AppState.keeps),
+      vaults: computed(() => AppState.vaults),
       activeProfile: computed(() => AppState.activeProfile),
       newKeep: {},
       newVault: {}
     })
     onMounted(async() => {
       try {
-        await keepsService.getAllKeeps() // TODO change to getAllKeepsByProfileId
         await profilesService.getProfileById(route.params.id)
+        await keepsService.getKeepsByProfileId(route.params.id)
+        await vaultsService.getVaultsByProfileId(route.params.id)
       } catch (error) {
-        Notification.toast('Error:' + error, 'error')
+        Notification.toast('That did not work: ' + error, 'error')
       }
     })
     return {
@@ -178,8 +182,8 @@ export default {
         try {
           await keepsService.createKeep(state.newKeep)
           state.newKeep = {}
-          await keepsService.getAllKeeps()
           Notification.toast('Keep Created!', 'success')
+          $('#NewKeep').modal('hide')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
@@ -188,7 +192,8 @@ export default {
         try {
           await vaultsService.createVault(state.newVault)
           state.newVault = {}
-          await vaultsService.getAllVaults()
+          $('.NewVault').modal('hide')
+          await vaultsService.getVaultsByProfileId()
           Notification.toast('Vault Created!', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')

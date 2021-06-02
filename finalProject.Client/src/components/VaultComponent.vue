@@ -1,16 +1,16 @@
 <template>
   <div class="mt-4 d-flex flex-column justify-content-center align-items-center">
-    <router-link :to="{ name: 'Vault' }" class="nav-link">
+    <router-link :to="{ name: 'VaultPage', params: {id: vaultProp.id}}" class="nav-link">
       <div class="img-mason pocket rounded shadow-sm">
         <div class="gradient-top">
-          <img class="img-mason"
+          <img class="img-mason rounded border shadow"
                src="https://homepages.cae.wisc.edu/~ece533/images/airplane.png"
                alt=""
                title="click to view this vault"
           >
         </div>
         <div class="bottom-left">
-          <h3>Vault Title</h3>
+          <h3>{{ vaultProp.name }}</h3>
         </div>
       </div>
     </router-link>
@@ -22,7 +22,13 @@ import { AppState } from '../AppState'
 import { computed, reactive } from 'vue'
 
 export default {
-  name: 'Keep',
+  name: 'Vault',
+  props: {
+    vaultProp: {
+      type: Object,
+      required: true
+    }
+  },
   setup() {
     const state = reactive({
       user: computed(() => AppState.user)

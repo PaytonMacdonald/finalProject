@@ -17,7 +17,10 @@ export default {
   name: 'HomePage',
   setup() {
     const state = reactive({
-      keeps: computed(() => AppState.keeps)
+      keeps: computed(() => AppState.keeps),
+      vaults: computed(() => AppState.vaults),
+      user: computed(() => AppState.user),
+      account: computed(() => AppState.account)
     })
     onMounted(async() => {
       try {
