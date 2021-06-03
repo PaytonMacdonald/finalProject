@@ -32,7 +32,7 @@
           Login
         </button>
 
-        <div class="card dropdown pt-2 pb-2 pl-2 pr-2 bg-light shadow-sm" v-else>
+        <div class="card dropdown pt-2 pb-2 pl-2 pr-2 bg-dark shadow-sm" v-else>
           <div
             class="dropdown-toggle text-primary"
             @click="state.dropOpen = !state.dropOpen"
@@ -43,7 +43,7 @@
               height="40"
               class="rounded border"
             />
-            <span class="mx-3 text-dark"><b>{{ user.name }}</b></span>
+            <span class="mx-3  text-white"><b>{{ user.name }}</b></span>
           </div>
           <div
             class="dropdown-menu p-0 list-group w-100"

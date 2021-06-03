@@ -1,9 +1,9 @@
 <template>
   <div class="col-3 mt-4 d-flex flex-column justify-content-center align-items-center">
     <router-link :to="{ name: 'VaultPage', params: {id: vaultProp.id}}" class="nav-link">
-      <div class="img-mason pocket rounded shadow-sm">
+      <div class="img-mason pocket rounded shadow-sm bg-primary">
         <div class="gradient-top">
-          <img class="img-mason rounded border shadow"
+          <img class="img-mason rounded border shadow invisible"
                src="https://homepages.cae.wisc.edu/~ece533/images/airplane.png"
                alt=""
                title="click to view this vault"

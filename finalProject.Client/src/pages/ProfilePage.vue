@@ -9,7 +9,7 @@
           {{ state.activeProfile.name }}
         </h2>
         <h4 class="text-white">
-          Vaults: 0
+          Vaults: {{ state.vaults.length }}
         </h4>
         <h4 class="text-white">
           Keeps: {{ state.keeps.length }}
@@ -123,10 +123,10 @@
                 <textarea class="form-control" id="vaultDescription" rows="3" placeholder="Description..." v-model="state.newVault.description"></textarea>
               </div>
               <!-- TODO private option needs to work -->
-              <!-- <div class="form-check text-dark">
-                <input type="checkbox" class="form-check-input" id="privateVault">
-                <label class="form-check-label" for="privateVault">Private Vault</label>
-              </div> -->
+              <div class="form-check text-dark">
+                <input type="checkbox" class="form-check-input" id="privateVault" @click="formCheckBox">
+                <label class="form-check-label" for="privateVault">Make This Vault Private</label>
+              </div>
             </div>
             <div class="modal-footer">
               <button type="submit" class="btn btn-primary">
@@ -161,11 +161,13 @@ export default {
     const route = useRoute()
     const state = reactive({
       user: computed(() => AppState.user),
+      account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps),
       vaults: computed(() => AppState.vaults),
       activeProfile: computed(() => AppState.activeProfile),
-      newKeep: {},
-      newVault: {}
+      privateCheck: false,
+      newVault: { isPrivate: false },
+      newKeep: {}
     })
     onMounted(async() => {
       try {
@@ -193,12 +195,22 @@ export default {
         try {
           await vaultsService.createVault(state.newVault)
           state.newVault = {}
-          await vaultsService.getVaultsByProfileId(route.params.id)
+          await vaultsService.getVaultsByProfileId(route.params.id, state.account.id)
           $('#NewVault').modal('hide')
           Notification.toast('Vault Created!', 'success')
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }
+      },
+      formCheckBox() {
+        if (state.privateCheck === false) {
+          state.privateCheck = true
+          state.newVault.isPrivate = true
+          return state.privateCheck
+        }
+        state.privateCheck = false
+        state.newVault.isPrivate = false
+        return state.privateCheck
       }
     }
   },

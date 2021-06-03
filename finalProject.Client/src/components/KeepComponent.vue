@@ -62,7 +62,7 @@
                     {{ keepProp.description }}
                   </p>
                 </div>
-                <div class="row align-items-end justify-content-between pr-4 mx-2">
+                <div class="row align-content-end justify-content-between pr-4 mx-2">
                   <div class="col-5">
                     <!-- TODO attach a v-if that hides button when in a vault -->
                     <div class="dropdown">
