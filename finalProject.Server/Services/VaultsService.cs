@@ -40,17 +40,29 @@ namespace finalProject.Services
             }
             throw new Exception("You Don't Have Access to This Vault");
         }
+        // ////////////////////////////////////////////////////////// //
+
+
+
+
+
         // FIXME ////////////////////////////////////////////////////////// //
         internal IEnumerable<Vault> GetVaultsByProfileId(string id, Account userInfo)
         {
-            IEnumerable<Vault> vaults = _repo.GetVaultsByProfileId(id);
-            if (userInfo.Id == id)
+            if (userInfo != null && userInfo.Id == id)
             {
                 return _repo.GetVaultsByProfileId(id);
             }
+            IEnumerable<Vault> vaults = _repo.GetVaultsByProfileId(id);
             return vaults.ToList().FindAll(v => v.IsPrivate == false);
         }
         // FIXME ////////////////////////////////////////////////////////// //
+
+
+
+
+
+        // ////////////////////////////////////////////////////////// //
         internal Vault Update(Vault v, string id)
         {
             Vault vault = _repo.GetById(v.Id);

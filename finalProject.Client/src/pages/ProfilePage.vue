@@ -1,10 +1,10 @@
 <template>
-  <div class="container-fluid mx-5 mt-5">
-    <div class="row border-bottom border-primary pb-5 mx-5">
-      <div class="col-1 d-flex align-items-center">
-        <img class="rounded shadow border" :src="state.activeProfile.picture" alt="">
+  <div class="container-fluid mx-md-5 mt-4">
+    <div class="row border-bottom border-primary pb-5 mx-2 mx-md-5">
+      <div class="col col-md-1 d-flex justify-content-center justify-content-md-start align-items-center">
+        <img class="rounded shadow border" :src="state.activeProfile.picture" alt="Profile Picture">
       </div>
-      <div class="col ml-5">
+      <div class="col ml-md-5">
         <h2 class="">
           {{ state.activeProfile.name }}
         </h2>
@@ -16,21 +16,23 @@
         </h4>
       </div>
     </div>
-    <div class="row mt-4 mx-5">
+    <div class="row mt-4 mx-2 mx-md-5">
       <h1 class="text-white">
         VAULTS <i class="fas fa-plus text-primary add-thing" data-toggle="modal" data-target="#NewVault" title="add a new vault" />
       </h1>
     </div>
-    <div class="row mx-5 border-bottom border-primary pb-5">
+    <div class="row mx-2 mx-md-5 border-bottom border-primary pb-5">
       <VaultComponent v-for="vault in state.vaults" :key="vault.id" :vault-prop="vault" />
     </div>
-    <div class="row mt-4 mx-5">
+    <div class="row mt-4 mx-2 mx-md-5">
       <h1 class="text-white">
         Keeps <i class="fas fa-plus text-primary add-thing" data-toggle="modal" data-target="#NewKeep" title="add a new keep" />
       </h1>
     </div>
-    <div class="row mx-5 pb-5 mb-5">
-      <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
+    <div class="row mx-2 mx-md-5 pb-5 mb-5">
+      <div class="card-columns">
+        <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
+      </div>
     </div>
     <!-- MODAL FORM 1 KEEPS -->
     <div class="modal fade"
@@ -173,7 +175,7 @@ export default {
       try {
         await profilesService.getProfileById(route.params.id)
         await keepsService.getKeepsByProfileId(route.params.id)
-        await vaultsService.getVaultsByProfileId(route.params.id)
+        await vaultsService.getVaultsByProfileId(state.activeProfile.id)
       } catch (error) {
         Notification.toast('That did not work: ' + error, 'error')
       }

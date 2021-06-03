@@ -34,7 +34,7 @@
 
         <div class="card dropdown pt-2 pb-2 pl-2 pr-2 bg-dark shadow-sm" v-else>
           <div
-            class="dropdown-toggle text-primary"
+            class="dropdown-toggle text-primary point"
             @click="state.dropOpen = !state.dropOpen"
           >
             <img
@@ -123,5 +123,8 @@ a:hover {
 }
 h1{
   font-weight: 800;
+}
+.point{
+  cursor: pointer;
 }
 </style>

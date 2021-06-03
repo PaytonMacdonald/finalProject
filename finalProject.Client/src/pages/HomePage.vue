@@ -1,7 +1,9 @@
 <template>
-  <div class="container-fluid mx-5 mt-4">
-    <div class="row mx-5">
-      <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
+  <div class="container-fluid mx-md-5 mt-4">
+    <div class="row mx-3 mx-md-5">
+      <div class="card-columns">
+        <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
+      </div>
     </div>
   </div>
 </template>

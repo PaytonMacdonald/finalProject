@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid mx-5">
+  <div class="container-fluid mx-2 mx-md-5">
     <div class="row mx-5 mt-5 d-flex align-items-center">
       <h1>
         {{ state.activeVault.name }}
@@ -8,14 +8,16 @@
         </span>
       </h1>
     </div>
-    <div class="row mx-5 mt-2">
+    <div class="row mx-2 mx-md-5 mt-2">
       <p>{{ state.activeVault.description }}</p>
     </div>
-    <div class="row mx-5 mt-1 border-bottom border-primary pb-4">
+    <div class="row mx-2 mx-md-5 mt-1 border-bottom border-primary pb-4">
       <h4>keeps: {{ state.keeps.length }}</h4>
     </div>
-    <div class="row mx-5 mt-3">
-      <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
+    <div class="row mx-2 mx-md-5 mt-3">
+      <div class="card-columns">
+        <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
+      </div>
     </div>
   </div>
 </template>
