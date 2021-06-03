@@ -12,9 +12,9 @@ namespace finalProject.Models
         public string Description { get; set; }
         [Required]
         public string Img { get; set; }
-        public int Views { get; set; }
-        public int Shares { get; set; }
-        public int Keeps { get; set; }
+        public int Views { get; set; } = 0;
+        public int Shares { get; set; } = 0;
+        public int Keeps { get; set; } = 0;
         // Virtual
         public Profile Creator { get; set; }
     }

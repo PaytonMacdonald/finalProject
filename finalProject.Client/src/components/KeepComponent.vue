@@ -8,7 +8,7 @@
            :data-target="'.keepModal' + keepProp.id"
            title="click for details"
       >
-      <div class="bottom-left">
+      <div class="bottom-left onimage">
         <h3>{{ keepProp.name }}</h3>
       </div>
       <div class="bottom-right">
@@ -56,11 +56,11 @@
               <!-- SECTION IMAGE -->
               <div class="col col-md-5 d-flex justify-content-center justify-content-md-start">
                 <img class="img-modal shadow-sm rounded" :src="keepProp.img">
-                <div class="top-left">
+                <!-- <div class="top-left">
                   <h6><i class="delete-button fas fa-edit fa-2x text-primary pl-2" data-toggle="modal" :data-target="'#EditKeep' + keepProp.id" /></h6>
-                </div>
+                </div> -->
                 <div class="bottom-left">
-                  <div v-if="keepProp.creatorId == state.account.id && keepProp.vaultKeepId != null">
+                  <div v-if="state.activeVault.creatorId == state.account.id && keepProp.vaultKeepId != null">
                     <button type="button" class="btn btn-dark btn-sm ml-md-2" @click="deleteVaultKeep(keepProp.vaultKeepId)">
                       remove from vault
                     </button>
@@ -81,7 +81,7 @@
                         <i class="fas fa-eye text-primary" /> <span class="ml-2 text-primary">0</span>
                       </div>
                       <div class="col-3 d-flex justify-content-center align-items-center">
-                        <i class="fas fa-share-square text-primary" /> <span class="ml-2 text-primary">0</span>
+                        <i class="fas fa-share-square text-primary" /> <span class="ml-2 text-primary">{{ keepProp.keeps }}</span>
                       </div>
                       <div class="col-3 d-flex justify-content-center align-items-center">
                         <i class="fas fa-share-alt text-primary" /> <span class="ml-2 text-primary">0</span>
@@ -114,7 +114,7 @@
                         add to vault
                       </button>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <div class="ml-2" v-for="vault in state.vaults" :key="vault.id" @click="createVaultKeep(vault.id)">
+                        <div class="ml-2" v-for="vault in state.myVaults" :key="vault.id" @click="createVaultKeep(vault.id)">
                           <a href="#">{{ vault.name }}</a>
                         </div>
                       </div>
@@ -228,9 +228,11 @@ export default {
   setup(props) {
     const state = reactive({
       keeps: computed(() => AppState.keeps),
+      myVaults: computed(() => AppState.myVaults),
       vaults: computed(() => AppState.vaults),
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
+      activeVault: computed(() => AppState.activeVault),
       newVaultKeep: {}
     })
     return {
@@ -331,6 +333,9 @@ opacity: 0;
 }
 .big-modal{
   max-width: 60vw;
+}
+.onimage {
+  text-shadow: 1px 3px 5px #000000;
 }
 @media only screen and (max-width: 600px) {
 .big-modal{

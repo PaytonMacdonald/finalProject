@@ -18,7 +18,10 @@
     </div>
     <div class="row mt-4 mx-2 mx-md-5">
       <h1 class="text-white">
-        VAULTS <i class="fas fa-plus text-primary add-thing" data-toggle="modal" data-target="#NewVault" title="add a new vault" />
+        VAULTS
+        <span class="" v-if="state.activeProfile.id == state.account.id">
+          <i class="fas fa-plus text-primary add-thing" data-toggle="modal" data-target="#NewVault" title="add a new vault" />
+        </span>
       </h1>
     </div>
     <div class="row mx-2 mx-md-5 border-bottom border-primary pb-5">
@@ -26,7 +29,9 @@
     </div>
     <div class="row mt-4 mx-2 mx-md-5">
       <h1 class="text-white">
-        Keeps <i class="fas fa-plus text-primary add-thing" data-toggle="modal" data-target="#NewKeep" title="add a new keep" />
+        <span class="" v-if="state.activeProfile.id == state.account.id">
+          Keeps <i class="fas fa-plus text-primary add-thing" data-toggle="modal" data-target="#NewKeep" title="add a new keep" />
+        </span>
       </h1>
     </div>
     <div class="row mx-2 mx-md-5 pb-5 mb-5">

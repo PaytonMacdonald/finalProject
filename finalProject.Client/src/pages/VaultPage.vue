@@ -39,7 +39,8 @@ export default {
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       keeps: computed(() => AppState.keeps),
-      activeVault: computed(() => AppState.activeVault)
+      activeVault: computed(() => AppState.activeVault),
+      activeProfile: computed(() => AppState.activeProfile)
     })
     onMounted(async() => {
       try {
