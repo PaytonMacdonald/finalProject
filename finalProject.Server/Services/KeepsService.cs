@@ -69,6 +69,16 @@ namespace finalProject.Services
             return _repo.Update(k);
         }
         // ////////////////////////////////////////////////////////// //
+        internal Keep UpdateCount(Keep k, string id)
+        {
+            Keep keep = _repo.GetById(k.Id);
+            if (keep == null)
+            {
+                throw new Exception("Invalid Id");
+            }
+            return _repo.UpdateCount(k);
+        }
+        // ////////////////////////////////////////////////////////// //
         internal void Delete(int id, string userId)
         {
             Keep keep = _repo.GetById(id);

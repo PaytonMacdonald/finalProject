@@ -12,11 +12,11 @@
       <p>{{ state.activeVault.description }}</p>
     </div>
     <div class="row mx-2 mx-md-5 mt-1 border-bottom border-primary pb-4">
-      <h4>keeps: {{ state.keeps.length }}</h4>
+      <h4>keeps: {{ state.vaultKeeps.length }}</h4>
     </div>
     <div class="row mx-2 mx-md-5 mt-3">
       <div class="card-columns">
-        <KeepComponent v-for="keep in state.keeps" :key="keep.id" :keep-prop="keep" />
+        <KeepComponent v-for="keep in state.vaultKeeps" :key="keep.id" :keep-prop="keep" />
       </div>
     </div>
   </div>
@@ -38,7 +38,7 @@ export default {
     const state = reactive({
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
-      keeps: computed(() => AppState.keeps),
+      vaultKeeps: computed(() => AppState.vaultKeeps),
       activeVault: computed(() => AppState.activeVault),
       activeProfile: computed(() => AppState.activeProfile)
     })

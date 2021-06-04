@@ -43,7 +43,6 @@ namespace finalProject.Controllers
             }
         }
         // ////////////////////////////////////////////////////////// //
-        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<VaultKeep>> Delete(int id)
         {

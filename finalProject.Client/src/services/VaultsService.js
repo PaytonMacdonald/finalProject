@@ -1,6 +1,7 @@
 import { AppState } from '../AppState'
 import { api } from './AxiosService'
 import router from '../router.js'
+
 class VaultsService {
   async createVault(data) {
     const res = await api.post('/api/vaults', data)

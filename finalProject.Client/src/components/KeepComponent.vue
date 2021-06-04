@@ -7,6 +7,7 @@
            data-toggle="modal"
            :data-target="'.keepModal' + keepProp.id"
            title="click for details"
+           @click="addViewCount"
       >
       <div class="bottom-left onimage">
         <h3>{{ keepProp.name }}</h3>
@@ -78,13 +79,13 @@
                     </div>
                     <div class="row justify-content-center mt-3 mt-md-0 mr-0">
                       <div class="col-3 d-flex justify-content-center align-items-center">
-                        <i class="fas fa-eye text-primary" /> <span class="ml-2 text-primary">0</span>
+                        <i class="fas fa-eye text-primary" /> <span class="ml-2 text-primary">{{ keepProp.views }}</span>
                       </div>
                       <div class="col-3 d-flex justify-content-center align-items-center">
                         <i class="fas fa-share-square text-primary" /> <span class="ml-2 text-primary">{{ keepProp.keeps }}</span>
                       </div>
                       <div class="col-3 d-flex justify-content-center align-items-center">
-                        <i class="fas fa-share-alt text-primary" /> <span class="ml-2 text-primary">0</span>
+                        <i class="fas fa-share-alt text-primary" /> <span class="ml-2 text-primary">{{ keepProp.shares }}</span>
                       </div>
                     </div>
                     <div class="row justify-content-center text-dark mt-2 mr-0">
@@ -233,7 +234,8 @@ export default {
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
       activeVault: computed(() => AppState.activeVault),
-      newVaultKeep: {}
+      newVaultKeep: {},
+      newKeepEdit: { name: props.keepProp.name, img: props.keepProp.img, keeps: props.keepProp.keeps, views: props.keepProp.views }
     })
     return {
       state,
@@ -241,6 +243,8 @@ export default {
         try {
           state.newVaultKeep = { vaultId: id, keepId: props.keepProp.id }
           await vaultkeepsService.createVaultKeep(state.newVaultKeep)
+          state.newKeepEdit.keeps += 1
+          await keepsService.editKeepCount(state.newKeepEdit, props.keepProp.id)
           Notification.toast('Keep Added to Vault!', 'success')
           $('.keepModal' + props.keepProp.id).modal('hide')
         } catch (error) {
@@ -252,7 +256,10 @@ export default {
           if (await Notification.confirmAction('Are you sure you want to delete this keep?')) {
             $('.keepModal' + props.keepProp.id).modal('hide')
             await vaultkeepsService.deleteVaultKeep(id)
-            Notification.toast('Keep Deleted', 'success')
+            state.newKeepEdit.keeps -= 1
+            await keepsService.editKeep(state.newKeepEdit, props.keepProp.id)
+            await keepsService.getKeepsByVaultId(state.activeVault.id)
+            Notification.toast('Keep Removed from Vault', 'success')
           }
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
@@ -269,11 +276,10 @@ export default {
           Notification.toast('Error: ' + error, 'error')
         }
       },
-      async editKeep() {
+      async addViewCount() {
         try {
-          await keepsService.editKeep(state.newKeepName, props.keepProp.id)
-          state.newKeepEdit = {}
-          Notification.toast('Keep Updated!', 'success')
+          state.newKeepEdit.views += 1
+          await keepsService.editKeepCount(state.newKeepEdit, props.keepProp.id)
         } catch (error) {
           Notification.toast('Error: ' + error, 'error')
         }

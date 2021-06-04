@@ -111,6 +111,23 @@ namespace finalProject.Repositories
             return k;
         }
         // ////////////////////////////////////////////////////////// //
+        internal Keep UpdateCount(Keep k)
+        {
+            string sql = @"
+            UPDATE keeps 
+            SET 
+                name = @Name,
+                description = @Description,
+                img = @Img,
+                views = @Views,
+                shares = @Shares,
+                keeps = @Keeps
+            WHERE id = @Id;
+            ";
+            _db.Execute(sql, k);
+            return k;
+        }
+        // ////////////////////////////////////////////////////////// //
         internal void Delete(int id)
         {
             string sql = "DELETE FROM keeps WHERE id = @id LIMIT 1;";

@@ -23,11 +23,16 @@ class KeepsService {
 
   async getKeepsByVaultId(id) {
     const res = await api.get(`api/vaults/${id}/keeps`)
-    AppState.keeps = res.data
+    AppState.vaultKeeps = res.data
   }
 
   async editKeep(data, id) {
     await api.put('/api/keeps/' + id, data)
+    this.getAllKeeps()
+  }
+
+  async editKeepCount(data, id) {
+    await api.put(`/api/keeps/${id}/count`, data)
     this.getAllKeeps()
   }
 

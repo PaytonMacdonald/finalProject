@@ -82,6 +82,23 @@ namespace finalProject.Controllers
             }
         }
         // ////////////////////////////////////////////////////////// //
+        [HttpPut("{id}/count")]
+        public async Task<ActionResult<Keep>> UpdateCount(int id, [FromBody] Keep k)
+        {
+            try
+            {
+                Account userInfo = await HttpContext.GetUserInfoAsync<Account>();
+                k.Id = id;
+                Keep newKeep = _service.UpdateCount(k, userInfo.Id);
+                newKeep.Creator = userInfo;
+                return Ok(newKeep);
+            }
+            catch (System.Exception e)
+            {
+                return BadRequest(e.Message);
+            }
+        }
+        // ////////////////////////////////////////////////////////// //
         [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<string>> Delete(int id)
