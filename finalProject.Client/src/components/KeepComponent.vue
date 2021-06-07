@@ -14,7 +14,7 @@
       </div>
       <div class="bottom-right">
         <div class="rounded bg-light">
-          <router-link :to="{ name: 'ProfilePage', params: {id: keepProp.creator.id}}">
+          <router-link :to="{ name: 'ProfilePage', params: {id: keepProp.creatorId}}">
             <img class="img-mason rounded border size-overide" :src="keepProp.creator.picture" alt="" width="50">
           </router-link>
         </div>
@@ -257,7 +257,7 @@ export default {
             $('.keepModal' + props.keepProp.id).modal('hide')
             await vaultkeepsService.deleteVaultKeep(id)
             state.newKeepEdit.keeps -= 1
-            await keepsService.editKeep(state.newKeepEdit, props.keepProp.id)
+            await keepsService.editKeepCount(state.newKeepEdit, props.keepProp.id)
             await keepsService.getKeepsByVaultId(state.activeVault.id)
             Notification.toast('Keep Removed from Vault', 'success')
           }

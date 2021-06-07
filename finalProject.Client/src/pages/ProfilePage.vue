@@ -29,8 +29,9 @@
     </div>
     <div class="row mt-4 mx-2 mx-md-5">
       <h1 class="text-white">
+        Keeps
         <span class="" v-if="state.activeProfile.id == state.account.id">
-          Keeps <i class="fas fa-plus text-primary add-thing" data-toggle="modal" data-target="#NewKeep" title="add a new keep" />
+          <i class="fas fa-plus text-primary add-thing" data-toggle="modal" data-target="#NewKeep" title="add a new keep" />
         </span>
       </h1>
     </div>

@@ -15,9 +15,11 @@
       <h4>keeps: {{ state.vaultKeeps.length }}</h4>
     </div>
     <div class="row mx-2 mx-md-5 mt-3">
+      <!-- <div class="" v-if="state.vaultkeeps"> -->
       <div class="card-columns">
         <KeepComponent v-for="keep in state.vaultKeeps" :key="keep.id" :keep-prop="keep" />
       </div>
+      <!-- </div> -->
     </div>
   </div>
 </template>
