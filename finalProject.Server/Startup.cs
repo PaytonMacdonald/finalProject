@@ -115,9 +115,10 @@ namespace finalProject.Server
             app.UseRouting();
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
