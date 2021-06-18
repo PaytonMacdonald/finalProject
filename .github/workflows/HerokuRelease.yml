@@ -27,7 +27,7 @@ jobs:
       # dotnet build and publish
       - name: dotnet publish
         run: |
-          dotnet publish ./finalProject.Server -c Release 
+          dotnet publish ./finalProject.Server -c Release
       - name: Build, Push and Release a Docker container to Heroku.
         uses: gonuit/heroku-docker-deploy@v1.3.3 # GitHub action name (leave it as it is).
         with:
@@ -42,4 +42,4 @@ jobs:
           # Name of the heroku application to which the build is to be sent.
           heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
 ### IMPORTANT PART if your file is in your server folder change this, if it is at the top level you will need to change the path on the DOCKERFILE ###
-          dockerfile_directory: ./finalProject.Server
+          dockerfile_directory: ./finalProject.Server/
