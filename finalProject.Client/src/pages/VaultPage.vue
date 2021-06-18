@@ -26,7 +26,7 @@
 
 <script>
 import { AppState } from '../AppState'
-import { reactive, computed, onMounted } from 'vue'
+import { reactive, computed, onMounted, watch } from 'vue'
 import { keepsService } from '../services/KeepsService'
 import { vaultsService } from '../services/VaultsService'
 import { useRoute } from 'vue-router'
@@ -37,6 +37,12 @@ export default {
   name: 'VaultPage',
   setup() {
     const route = useRoute()
+    watch(
+      () => state.account,
+      async x => {
+        await vaultsService.getVaultById(route.params.id)
+      }
+    )
     const state = reactive({
       user: computed(() => AppState.user),
       account: computed(() => AppState.account),
@@ -46,7 +52,6 @@ export default {
     })
     onMounted(async() => {
       try {
-        await vaultsService.getVaultById(route.params.id)
         await keepsService.getKeepsByVaultId(route.params.id)
       } catch (error) {
         Notification.toast('Error:' + error, 'error')
